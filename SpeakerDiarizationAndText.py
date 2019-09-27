@@ -235,92 +235,90 @@ def main(file_path, check, embedding_per_second=1.0, overlap_rate=0.5):
         # print("predicted_label2: %s" % predicted_label2)
         check_speaker = len(set(predicted_label2))
 
-        # ms_comparision_status = 'same Speaker' if total_speaker == check_speaker else 'not the same speaker'
-        # ws.write(iter + 1, 2, ms_comparision_status)
+        ms_comparision_status = 'same Speaker' if total_speaker == check_speaker else 'not the same speaker'
+        ws.write(iter + 1, 2, ms_comparision_status)
 
-        print('same Speaker' if total_speaker == check_speaker else 'not the same speaker')
+        # print('same Speaker' if total_speaker == check_speaker else 'not the same speaker')
         # print(ms_comparision_status)
         # print('speaker detected as ' + str(predicted_label2[-1]) if total_speaker == check_speaker else '')
-#        speakerSlice2 = arrangeResult(predicted_label2, time_spec_rate)
-        # print("=============speakerSlice2===============")
-#        for spk, timeDicts in speakerSlice2.items():  # time map to orgin wav(contains mute)
-#            for tid, timeDict in enumerate(timeDicts):
-#                s = 0
-#                e = 0
-#                for i, key in enumerate(keys):
-#                    if (s != 0 and e != 0):
-#                        break
-#                    if (s == 0 and key > timeDict['start']):
-#                        offset = timeDict['start'] - keys[i - 1]
-#                        s = mapTable[keys[i - 1]] + offset
-#                    if (e == 0 and key > timeDict['stop']):
-#                        offset = timeDict['stop'] - keys[i - 1]
-#                        e = mapTable[keys[i - 1]] + offset
-#
-#                speakerSlice2[spk][tid]['start'] = s
-#                speakerSlice2[spk][tid]['stop'] = e
-#
-#        for spk, timeDicts in speakerSlice2.items():
-#            # print('========= ' + str(spk) + ' =========')
-#            for timeDict in timeDicts:
-#                s = timeDict['start']
-#                e = timeDict['stop']
-#                s = fmtTime(s)  # change point moves to the center of the slice
-#                e = fmtTime(e)
-#                # print(s + ' ==> ' + e)
-#        # print("=============speakerSlice2===============")
-#        # print(predicted_label,'**************************')
-#        predicted_label2 = None
-#    center_duration = int(1000 * (1.0 / embedding_per_second) // 2)
-#    speakerSlice = arrangeResult(predicted_label, time_spec_rate)
-#
-#    for spk, timeDicts in speakerSlice.items():  # time map to orgin wav(contains mute)
-#        for tid, timeDict in enumerate(timeDicts):
-#            s = 0
-#            e = 0
-#            for i, key in enumerate(keys):
-#                if (s != 0 and e != 0):
-#                    break
-#                if (s == 0 and key > timeDict['start']):
-#                    offset = timeDict['start'] - keys[i - 1]
-#                    s = mapTable[keys[i - 1]] + offset
-#                if (e == 0 and key > timeDict['stop']):
-#                    offset = timeDict['stop'] - keys[i - 1]
-#                    e = mapTable[keys[i - 1]] + offset
-#
-#            speakerSlice[spk][tid]['start'] = s
-#            speakerSlice[spk][tid]['stop'] = e
-#
-#    for spk, timeDicts in speakerSlice.items():
-#        # print('========= ' + str(spk) + ' =========')
-#        for timeDict in timeDicts:
-#            s = timeDict['start']
-#            e = timeDict['stop']
-#            s = fmtTime(s)  # change point moves to the center of the slice
-#            e = fmtTime(e)
-#            # print(s + ' ==> ' + e)
-#
-#    predicted_label = None
+    #     speakerSlice2 = arrangeResult(predicted_label2, time_spec_rate)
+    #     # print("=============speakerSlice2===============")
+    #     for spk, timeDicts in speakerSlice2.items():  # time map to orgin wav(contains mute)
+    #         for tid, timeDict in enumerate(timeDicts):
+    #             s = 0
+    #             e = 0
+    #             for i, key in enumerate(keys1):
+    #                 if (s != 0 and e != 0):
+    #                     break
+    #                 if (s == 0 and key > timeDict['start']):
+    #                     offset = timeDict['start'] - keys1[i - 1]
+    #                     s = mapTable1[keys1[i - 1]] + offset
+    #                 if (e == 0 and key > timeDict['stop']):
+    #                     offset = timeDict['stop'] - keys1[i - 1]
+    #                     e = mapTable1[keys1[i - 1]] + offset
+    #
+    #             speakerSlice2[spk][tid]['start'] = s
+    #             speakerSlice2[spk][tid]['stop'] = e
+    #
+    #     for spk, timeDicts in speakerSlice2.items():
+    #         # print('========= ' + str(spk) + ' =========')
+    #         for timeDict in timeDicts:
+    #             s = timeDict['start']
+    #             e = timeDict['stop']
+    #             s = fmtTime(s)  # change point moves to the center of the slice
+    #             e = fmtTime(e)
+    #             print(s + ' ==> ' + e)
+    #     print("=============speakerSlice2===============")
+    #     # print(predicted_label,'**************************')
+    #     predicted_label2 = None
+    # center_duration = int(1000 * (1.0 / embedding_per_second) // 2)
+    # speakerSlice = arrangeResult(predicted_label, time_spec_rate)
+    #
+    # for spk, timeDicts in speakerSlice.items():  # time map to orgin wav(contains mute)
+    #     for tid, timeDict in enumerate(timeDicts):
+    #         s = 0
+    #         e = 0
+    #         for i, key in enumerate(keys):
+    #             if (s != 0 and e != 0):
+    #                 break
+    #             if (s == 0 and key > timeDict['start']):
+    #                 offset = timeDict['start'] - keys[i - 1]
+    #                 s = mapTable[keys[i - 1]] + offset
+    #             if (e == 0 and key > timeDict['stop']):
+    #                 offset = timeDict['stop'] - keys[i - 1]
+    #                 e = mapTable[keys[i - 1]] + offset
+    #
+    #         speakerSlice[spk][tid]['start'] = s
+    #         speakerSlice[spk][tid]['stop'] = e
+    #
+    # for spk, timeDicts in speakerSlice.items():
+    #     # print('========= ' + str(spk) + ' =========')
+    #     for timeDict in timeDicts:
+    #         s = timeDict['start']
+    #         e = timeDict['stop']
+    #         s = fmtTime(s)  # change point moves to the center of the slice
+    #         e = fmtTime(e)
+    #         print(s + ' ==> ' + e)
+    #
+    # predicted_label = None
 if __name__ == '__main__':
-    import gc
-    gc.disable()
-    excel_read_obj.excel_read('/home/muthumurugan/Desktop/GoldenAudio/new_voice_test.xlsx', 0)
+    excel_read_obj.excel_read('/home/saurabh/speaker_detection/SpeakerDiarization/new_voice_test.xlsx', 0)
     data = excel_read_obj.details
     tot = len(data)
     print(tot)
-    print("===================")
-    # wb_Result = xlwt.Workbook()
-    # ws = wb_Result.add_sheet('Golden_Audio')
-    # ws.write(0, 0, 'Golden Voice')
-    # ws.write(0, 1, 'Silver Voice')
-    # ws.write(0, 2, 'Status')
-    # ws.write(0, 3, 'Response Time')
-    for iter in range(9, tot):
-        print("===================")
+    # print("===================")
+    wb_Result = xlwt.Workbook()
+    ws = wb_Result.add_sheet('Golden_Audio')
+    ws.write(0, 0, 'Golden Voice')
+    ws.write(0, 1, 'Silver Voice')
+    ws.write(0, 2, 'Status')
+    ws.write(0, 3, 'Response Time')
+    for iter in range(0, tot):
+        # print("===================")
         print(iter)
         current_data = data[iter]
-        Golden = '/home/muthumurugan/Desktop/GoldenAudio/%s' % (current_data.get('GoldenVoice'))
-        silver = '/home/muthumurugan/Desktop/GoldenAudio/%s' % (current_data.get('SilverVoice'))
+        Golden = '/home/saurabh/speaker_detection/SpeakerDiarization/wav/%s' % (current_data.get('GoldenVoice'))
+        silver = '/home/saurabh/speaker_detection/SpeakerDiarization/wav/%s' % (current_data.get('SilverVoice'))
         import time
         start_time = time.time()
         # filepath=r'wavs/'
@@ -338,13 +336,13 @@ if __name__ == '__main__':
         else:
             main(filepath, check='', embedding_per_second=1.2, overlap_rate=0.4)
         total_response_time = (time.time() - start_time)
-        print("--- %s seconds ---" % (time.time() - start_time))
-
-        print("===================")
-        # ws.write(iter+1, 0, current_data.get('GoldenVoice'))
-        # ws.write(iter + 1, 1, current_data.get('SilverVoice'))
-        # ws.write(iter + 1, 3, total_response_time)
-        # wb_Result.save('/home/muthumurugan/Desktop/GoldenAudio/new_converted.xls')
+        # print("--- %s seconds ---" % (time.time() - start_time))
+        #
+        # print("===================")
+        ws.write(iter+1, 0, current_data.get('GoldenVoice'))
+        ws.write(iter + 1, 1, current_data.get('SilverVoice'))
+        ws.write(iter + 1, 3, total_response_time)
+        wb_Result.save('/home/saurabh/speaker_detection/SpeakerDiarization/new_converted.xls')
 # =============================================================================
 #     transcript = google_transcribe(audio_file_name)
 #     transcript_filename = audio_file_name.split('.')[0] + '.txt'

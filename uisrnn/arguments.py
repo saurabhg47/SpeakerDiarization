@@ -169,7 +169,7 @@ def parse_arguments():
   inference_parser.add_argument(
       '--beam_size',
       '-s',
-      default=10,
+      default=2,
       type=int,
       help='The beam search size for inference.')
   inference_parser.add_argument(
