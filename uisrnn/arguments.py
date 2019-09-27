@@ -169,7 +169,7 @@ def parse_arguments():
   inference_parser.add_argument(
       '--beam_size',
       '-s',
-      default=10,
+      default=2,
       type=int,
       help='The beam search size for inference.')
   inference_parser.add_argument(
@@ -179,7 +179,7 @@ def parse_arguments():
       help='The number of look ahead steps during inference.')
   inference_parser.add_argument(
       '--test_iteration',
-      default=2,
+      default=1,
       type=int,
       help='During inference, we concatenate M duplicates of the test '
            'sequence, and run inference on this concatenated sequence. '

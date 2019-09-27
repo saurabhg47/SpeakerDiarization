@@ -221,6 +221,12 @@ def main(file_path, check, embedding_per_second=1.0, overlap_rate=0.5):
         # print(featss)
         # print("=====================")
         predicted_label2 = uisrnnModel.predict(featss, inference_args)
+        import gc
+        print("Collected: %s" % gc.collect())
+        feats = None
+        featss = None
+        import gc
+        print("After Collected: %s" % gc.collect())
         check_speaker = len(set(predicted_label2))
         print("predicted_label2: %s" % predicted_label2)
         speakerSlice2 = arrangeResult(predicted_label2, time_spec_rate)
@@ -285,11 +291,11 @@ def main(file_path, check, embedding_per_second=1.0, overlap_rate=0.5):
 
 if __name__ == '__main__':
     import time
-
+    import gc
     start_time = time.time()
-    filepath = '/home/saurabh/speaker_detection/speaker_diarization/audio_files_test/AnkR.wav'
+    filepath = '/home/saurabh/speaker_detection/golden_audio/wav/Muthu_golden1_51sec1.wav'
     verify = 1
-    check = '/home/saurabh/speaker_detection/speaker_diarization/3speaker.wav'
+    check = '/home/saurabh/speaker_detection/golden_audio/wav/saurabh_61sec1.wav'
     audio_file_name = filepath.split('/')[-1]
     print(audio_file_name)
     if verify:

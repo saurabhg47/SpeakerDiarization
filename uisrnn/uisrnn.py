@@ -508,6 +508,8 @@ class UISRNN:
                        'by args.observation_dim.')
 
     self.rnn_model.eval()
+    
+    
     test_sequence = np.tile(test_sequence, (args.test_iteration, 1))
     test_sequence = autograd.Variable(
         torch.from_numpy(test_sequence).float()).to(self.device)
