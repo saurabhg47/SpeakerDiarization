@@ -177,7 +177,7 @@ def parse_arguments():
       help='The number of look ahead steps during inference.')
   inference_parser.add_argument(
       '--test_iteration',
-      default=1,
+      default=2,
       type=int,
       help='During inference, we concatenate M duplicates of the test '
            'sequence, and run inference on this concatenated sequence. '
