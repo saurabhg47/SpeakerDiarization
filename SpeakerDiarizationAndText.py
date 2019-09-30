@@ -302,7 +302,7 @@ def main(file_path, check, embedding_per_second=1.0, overlap_rate=0.5):
     #
     # predicted_label = None
 if __name__ == '__main__':
-    excel_read_obj.excel_read('/home/saurabh/speaker_detection/SpeakerDiarization/new_voice_test.xlsx', 0)
+    excel_read_obj.excel_read('/home/ubuntu/SpeakerDiarization/new_voice_test.xlsx', 0)
     data = excel_read_obj.details
     tot = len(data)
     print(tot)
@@ -317,8 +317,8 @@ if __name__ == '__main__':
         # print("===================")
         print(iter)
         current_data = data[iter]
-        Golden = '/home/saurabh/speaker_detection/SpeakerDiarization/wav/%s' % (current_data.get('GoldenVoice'))
-        silver = '/home/saurabh/speaker_detection/SpeakerDiarization/wav/%s' % (current_data.get('SilverVoice'))
+        Golden = '/home/ubuntu/SpeakerDiarization/wav/%s' % (current_data.get('GoldenVoice'))
+        silver = '/home/saurabh/SpeakerDiarization/wav/%s' % (current_data.get('SilverVoice'))
         import time
         start_time = time.time()
         # filepath=r'wavs/'

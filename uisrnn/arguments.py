@@ -20,10 +20,8 @@ _DEFAULT_OBSERVATION_DIM = 256
 
 def parse_arguments():
   """Parse arguments.
-
   Returns:
     A tuple of:
-
       - `model_args`: model arguments
       - `training_args`: training arguments
       - `inference_args`: inference arguments
@@ -120,7 +118,7 @@ def parse_arguments():
   training_parser.add_argument(
       '--batch_size',
       '-b',
-      default=2,
+      default=10,
       type=int,
       help='The batch size for training.')
   training_parser.add_argument(
@@ -169,7 +167,7 @@ def parse_arguments():
   inference_parser.add_argument(
       '--beam_size',
       '-s',
-      default=2,
+      default=10,
       type=int,
       help='The beam search size for inference.')
   inference_parser.add_argument(
@@ -179,7 +177,7 @@ def parse_arguments():
       help='The number of look ahead steps during inference.')
   inference_parser.add_argument(
       '--test_iteration',
-      default=1,
+      default=2,
       type=int,
       help='During inference, we concatenate M duplicates of the test '
            'sequence, and run inference on this concatenated sequence. '
