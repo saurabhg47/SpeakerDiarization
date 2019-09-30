@@ -318,7 +318,7 @@ if __name__ == '__main__':
         print(iter)
         current_data = data[iter]
         Golden = '/home/ubuntu/SpeakerDiarization/wav/%s' % (current_data.get('GoldenVoice'))
-        silver = '/home/saurabh/SpeakerDiarization/wav/%s' % (current_data.get('SilverVoice'))
+        silver = '/home/ubuntu/SpeakerDiarization/wav/%s' % (current_data.get('SilverVoice'))
         import time
         start_time = time.time()
         # filepath=r'wavs/'
@@ -342,7 +342,7 @@ if __name__ == '__main__':
         ws.write(iter+1, 0, current_data.get('GoldenVoice'))
         ws.write(iter + 1, 1, current_data.get('SilverVoice'))
         ws.write(iter + 1, 3, total_response_time)
-        wb_Result.save('/home/saurabh/speaker_detection/SpeakerDiarization/new_converted.xls')
+        wb_Result.save('/home/ubuntu/SpeakerDiarization/new_converted.xls')
 # =============================================================================
 #     transcript = google_transcribe(audio_file_name)
 #     transcript_filename = audio_file_name.split('.')[0] + '.txt'
