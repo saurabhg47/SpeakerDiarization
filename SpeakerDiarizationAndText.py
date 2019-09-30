@@ -161,7 +161,7 @@ def convert_file_to_wav(f_path, new_file):
     return status
 
 
-def main(file_path, check, embedding_per_second=1.0, overlap_rate=0.5):
+def main(file_path, check, embedding_per_second=1.0, overlap_rate=0.5, excel=False):
     # gpu configuration
     toolkits.initialize_GPU(args)
     if os.path.exists("/tmp/speaker/"):
@@ -232,15 +232,17 @@ def main(file_path, check, embedding_per_second=1.0, overlap_rate=0.5):
         feats = None
         featss = None
         print("After: %s" % gc.collect())
-        # print("predicted_label2: %s" % predicted_label2)
         check_speaker = len(set(predicted_label2))
+        if excel:
+            ms_comparision_status = 'same Speaker' if total_speaker == check_speaker else 'not the same speaker'
+            ws.write(iter + 1, 2, ms_comparision_status)
+        else:
 
-        ms_comparision_status = 'same Speaker' if total_speaker == check_speaker else 'not the same speaker'
-        ws.write(iter + 1, 2, ms_comparision_status)
+            print('same Speaker' if total_speaker == check_speaker else 'not the same speaker')
+            print('speaker detected as ' + str(predicted_label2[-1]) if total_speaker == check_speaker else '')
+            print("predicted_label1: %s" % predicted_label)
+            print("predicted_label2: %s" % predicted_label2)
 
-        # print('same Speaker' if total_speaker == check_speaker else 'not the same speaker')
-        # print(ms_comparision_status)
-        # print('speaker detected as ' + str(predicted_label2[-1]) if total_speaker == check_speaker else '')
     #     speakerSlice2 = arrangeResult(predicted_label2, time_spec_rate)
     #     # print("=============speakerSlice2===============")
     #     for spk, timeDicts in speakerSlice2.items():  # time map to orgin wav(contains mute)
@@ -302,47 +304,64 @@ def main(file_path, check, embedding_per_second=1.0, overlap_rate=0.5):
     #
     # predicted_label = None
 if __name__ == '__main__':
-    excel_read_obj.excel_read('/home/ubuntu/SpeakerDiarization/new_voice_test.xlsx', 0)
-    data = excel_read_obj.details
-    tot = len(data)
-    print(tot)
-    # print("===================")
-    wb_Result = xlwt.Workbook()
-    ws = wb_Result.add_sheet('Golden_Audio')
-    ws.write(0, 0, 'Golden Voice')
-    ws.write(0, 1, 'Silver Voice')
-    ws.write(0, 2, 'Status')
-    ws.write(0, 3, 'Response Time')
-    for iter in range(0, tot):
+    excel = True
+    if excel:
+        excel_read_obj.excel_read('/home/ubuntu/SpeakerDiarization/new_voice_test.xlsx', 0)
+        data = excel_read_obj.details
+        tot = len(data)
+        print(tot)
         # print("===================")
-        print(iter)
-        current_data = data[iter]
-        Golden = '/home/ubuntu/SpeakerDiarization/wav/%s' % (current_data.get('GoldenVoice'))
-        silver = '/home/ubuntu/SpeakerDiarization/wav/%s' % (current_data.get('SilverVoice'))
+        wb_Result = xlwt.Workbook()
+        ws = wb_Result.add_sheet('Golden_Audio')
+        ws.write(0, 0, 'Golden Voice')
+        ws.write(0, 1, 'Silver Voice')
+        ws.write(0, 2, 'Status')
+        ws.write(0, 3, 'Response Time')
+        for iter in range(0, tot):
+            # print("===================")
+            print(iter)
+            current_data = data[iter]
+            Golden = '/home/ubuntu/SpeakerDiarization/wav/%s' % (current_data.get('GoldenVoice'))
+            silver = '/home/ubuntu/SpeakerDiarization/wav/%s' % (current_data.get('SilverVoice'))
+            import time
+            start_time = time.time()
+            # filepath=r'wavs/'
+            # filepath=input('enter file path')#r'wavs/rec.wav'
+            filepath = Golden
+            # verify=int(input('Do you want to verify with another audio 0 for no 1 for yes'))
+            verify = 1
+            if verify:
+                # check=input('Enter audio filepath to check for speaker')
+                check = silver
+            audio_file_name = filepath.split('/')[-1]
+            # print(audio_file_name)
+            if verify:
+                main(filepath, check, embedding_per_second=1.2, overlap_rate=0.4, excel=excel)
+            else:
+                main(filepath, check='', embedding_per_second=1.2, overlap_rate=0.4)
+            total_response_time = (time.time() - start_time)
+            # print("--- %s seconds ---" % (time.time() - start_time))
+            #
+            # print("===================")
+            ws.write(iter+1, 0, current_data.get('GoldenVoice'))
+            ws.write(iter + 1, 1, current_data.get('SilverVoice'))
+            ws.write(iter + 1, 3, total_response_time)
+            wb_Result.save('/home/ubuntu/SpeakerDiarization/new_converted.xls')
+    else:
         import time
+        import gc
+
         start_time = time.time()
-        # filepath=r'wavs/'
-        # filepath=input('enter file path')#r'wavs/rec.wav'
-        filepath = Golden
-        # verify=int(input('Do you want to verify with another audio 0 for no 1 for yes'))
+        filepath = '/home/saurabh/speaker_detection/golden_audio/wav/komal_22sec1.wav'
         verify = 1
-        if verify:
-            # check=input('Enter audio filepath to check for speaker')
-            check = silver
+        check = '/home/saurabh/speaker_detection/golden_audio/wav/komal_74sec1.wav'
         audio_file_name = filepath.split('/')[-1]
-        # print(audio_file_name)
+        print(audio_file_name)
         if verify:
-            main(filepath, check, embedding_per_second=1.2, overlap_rate=0.4)
+            main(filepath, check, embedding_per_second=1.2, overlap_rate=0.4, excel=False)
         else:
             main(filepath, check='', embedding_per_second=1.2, overlap_rate=0.4)
-        total_response_time = (time.time() - start_time)
-        # print("--- %s seconds ---" % (time.time() - start_time))
-        #
-        # print("===================")
-        ws.write(iter+1, 0, current_data.get('GoldenVoice'))
-        ws.write(iter + 1, 1, current_data.get('SilverVoice'))
-        ws.write(iter + 1, 3, total_response_time)
-        wb_Result.save('/home/ubuntu/SpeakerDiarization/new_converted.xls')
+        print("--- %s seconds ---" % (time.time() - start_time))
 # =============================================================================
 #     transcript = google_transcribe(audio_file_name)
 #     transcript_filename = audio_file_name.split('.')[0] + '.txt'
